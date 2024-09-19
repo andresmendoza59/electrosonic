@@ -1,9 +1,6 @@
-import wave
-from waveio.encoding import PCMEncoding
+from waveio.reader import WAVReader
 
 
-with wave.open("../audio/output.wav") as wave_file:
-    metadata = wave_file.getparams()
-    frames = wave_file.readframes(metadata.nframes)
-    encoding = PCMEncoding(metadata.sampwidth)
-    amplitudes = encoding.decode(frames)
+with WAVReader("../audio/Bongo_sound.wav") as wav:
+    print(f"Frames: {wav.frames}")
+    print(f"Channels: {wav.channels}")
