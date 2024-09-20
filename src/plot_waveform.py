@@ -5,13 +5,14 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.ticker import FuncFormatter
 
-from waveio import WAVReader
+from src.waveio import WAVReader
 
 
 def main():
     args = parse_args()
     with WAVReader(args.path) as wav:
         plot(args.path.name, wav.metadata, wav.channels_sliced(args.start, args.end))
+
 
 def parse_args():
     parser = ArgumentParser(description="Plot the waveform of a WAV file")
@@ -32,6 +33,7 @@ def parse_args():
     )
     return parser.parse_args()
 
+
 def plot(filename, metadata, channels):
     try:
         plt.style.use("fivethirtyeight")
@@ -41,7 +43,7 @@ def plot(filename, metadata, channels):
     fig, ax = plt.subplots(
         nrows=metadata.num_channels,
         ncols=1,
-        figsize=(16, 9),}
+        figsize=(16, 9),
         sharex=True
     )
 
@@ -65,12 +67,13 @@ def plot(filename, metadata, channels):
     plt.tight_layout()
     plt.show()
 
+
 def format_time(instant, _):
     if instant < 60:
         return f"{instant:g}s"
     minutes, seconds = divmod(instant, 60)
     return f"{minutes:g}m {seconds:02g}s"
 
+
 if __name__ == "__main__":
     main()
-    
